@@ -12,3 +12,6 @@ project folder
 |
 |- docker-compose.yml
 ```
+
+## Reference
+https://github.com/PacktPublishing/Building-Modern-SaaS-Applications-with-C-and-.NET
