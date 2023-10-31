@@ -1,0 +1,19 @@
+version: '3.4'
+services:
+  sql_server:
+   image: mcr.microsoft.com/mssql/server:2022-latest
+   ports:
+    - "9876:1433" #MS SQL Server use 1433 port
+   volumes:
+     - ./habit-db-volume:/var/lib/mssqlql/data #host directory:container directory
+   env_file:
+     - sqlserver/sqlserver.env
+  dev-env:
+    build:
+      context: ./dev-env
+    volumes:
+      - ..:/workspace  #host directory:container directory, Dev Container has set workspace directory is "workspace"
+    # Ref : https://www.baeldung.com/ops/docker-compose-interactive-shell
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+# volumes: comment becuase the pyhsical folder (network drive) is used here. It can be maintananced easily (even expand volumes and backup)
