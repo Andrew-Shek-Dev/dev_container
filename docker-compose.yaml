@@ -1,6 +1,7 @@
 version: '3.4'
 services:
   sql_server:
+   container_name: sqlserver
    image: mcr.microsoft.com/mssql/server:2022-latest
    ports:
     - "9876:1433" #MS SQL Server use 1433 port
@@ -9,6 +10,7 @@ services:
    env_file:
      - sqlserver/sqlserver.env
   dev-env:
+    container_name: dev-env
     build:
       context: ./dev-env
     volumes:

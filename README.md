@@ -23,8 +23,6 @@ ARG VARIANT="7.0"
 ARG NODE_VERSION="none"
 
 FROM mcr.microsoft.com/vscode/devcontainers/dotnet:0-${VARIANT}
-# [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
-RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; fi
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && \
     export DEBIAN_FRONTEND=noninteractive && \
@@ -45,6 +43,7 @@ RUN dotnet dev-certs https
 version: '3.4'
 services:
   sql_server:
+   container_name: sqlserver
    image: mcr.microsoft.com/mssql/server:2022-latest
    ports:
     - "9876:1433" #MS SQL Server use 1433 port
@@ -53,6 +52,7 @@ services:
    env_file:
      - sqlserver/sqlserver.env
   dev-env:
+    container_name: dev-env
     build:
       context: ./dev-env
     volumes:
@@ -60,10 +60,68 @@ services:
     # Ref : https://www.baeldung.com/ops/docker-compose-interactive-shell
     stdin_open: true # docker run -i
     tty: true # docker run -t
-# volumes: comment becuase the pyhsical folder (network drive) is used here. It can be maintananced easily (even expand volumes and backup)
+# volumes: comment because the physical folder (network drive) is used here. It can be maintained easily (even expand volumes and backup)
 ```
+NOTE: Macbook M1/2/3 user MUST enable Rosetta at Docker Desktop. Please refer the [link](https://stackoverflow.com/questions/66662820/m1-docker-preview-and-keycloak-images-platform-linux-amd64-does-not-match-th)
 
 * Step 4 : Create `devcontainer.json`
+```json
+{
+    "name":"CAD001 Example",
+    "dockerComposeFile":["../docker-compose.yaml"],
+    "service":"dev-env",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-dotnettools.csharp",
+                "shardulm94.trailing-spaces",
+                "mikestead.dotenv",
+                "fernandoescolar.vscode-solution-explorer",
+                "jmrog.vscode-nuget-package-manager",
+                "patcx.vscode-nuget-gallery",
+                "pkief.material-icon-theme",
+                "ms-mssql.mssql",
+                "humao.rest-client",
+                "rangav.vscode-thunder-client",
+                "formulahendry.dotnet-test-explorer",
+                "kevin-chatham.aspnetcorerazor-html-css-class-completion",
+                "syncfusioninc.blazor-vscode-extensions",
+                "ms-dotnettools.vscode-dotnet-runtime",
+                "ms-dotnettools.blazorwasm-companion"
+                ]
+          }
+    },
+    "remoteUser": "root"
+}
+```
+
+
+* Step 5 : Testing Container `dev-env`
+```bash
+docker compose up -d
+docker exec -it dev-env /bin/bash
+docker exec -it sqlserver /bin/bash
+```
+
+* Step 6 : Testing Container `sqlserver`
+```bash
+docker exec -it sqlserver /bin/bash
+```
+
+* Step 7 : Connect MS SQL Server Console in `sqlserver` container
+```bash
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA
+```
+
+* Step 8 : Check MS SQL Server Version under Console
+```shell
+1> SELECT @@VERSION
+2> GO
+```
+
+The good news is that VSCode extension can streamline above all of steps!
+ 
 #### Setup the development environment using dev container in VSCode
 
 ## Reference
