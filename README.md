@@ -64,6 +64,36 @@ services:
 ```
 
 * Step 4 : Create `devcontainer.json`
+```json
+{
+    "name":"CAD001 Example",
+    "dockerComposeFile":["../docker-compose.yaml"],
+    "service":"dev-env",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-dotnettools.csharp",
+                "shardulm94.trailing-spaces",
+                "mikestead.dotenv",
+                "fernandoescolar.vscode-solution-explorer",
+                "jmrog.vscode-nuget-package-manager",
+                "patcx.vscode-nuget-gallery",
+                "pkief.material-icon-theme",
+                "ms-mssql.mssql",
+                "humao.rest-client",
+                "rangav.vscode-thunder-client",
+                "formulahendry.dotnet-test-explorer",
+                "kevin-chatham.aspnetcorerazor-html-css-class-completion",
+                "syncfusioninc.blazor-vscode-extensions",
+                "ms-dotnettools.vscode-dotnet-runtime",
+                "ms-dotnettools.blazorwasm-companion"
+                ]
+          }
+    },
+    "remoteUser": "root"
+}
+```
 #### Setup the development environment using dev container in VSCode
 
 ## Reference
