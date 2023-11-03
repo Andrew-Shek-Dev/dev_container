@@ -70,7 +70,7 @@ NOTE: Macbook M1/2/3 user MUST enable Rosetta at Docker Desktop. Please refer th
     "name":"CAD001 Example",
     "dockerComposeFile":["../docker-compose.yaml"],
     "service":"dev-env",
-    "workspaceFolder": "/workspace",
+    "workspaceFolder": "/workspace/${workspaceFolderBasename}",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -95,6 +95,7 @@ NOTE: Macbook M1/2/3 user MUST enable Rosetta at Docker Desktop. Please refer th
     "remoteUser": "root"
 }
 ```
+Reference : https://code.visualstudio.com/docs/editor/variables-reference
 
 * Step 5 : Testing Container `dev-env`
 ```bash
