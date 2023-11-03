@@ -1,0 +1,20 @@
+version: '3.4' # 3->3.4
+
+services:
+  dev-env: #app -> dev-env
+    build: 
+      context: ./dev-env #. -> ./dev-env
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspaces #../..:/workspaces:cached -> ..:/workspaces
+    command: sleep infinity
+    network_mode: service:sql_server #db -> sql_server
+
+  sql_server: #db -> sql_server
+    image: mcr.microsoft.com/mssql/server:2022-latest #2019 -> 2022
+    restart: unless-stopped
+    volumes:
+      - ./habit-db-volume:/var/lib/mssqlql/data #add this mapping
+    environment:
+      SA_PASSWORD: P@ssw0rd
+      ACCEPT_EULA: Y
