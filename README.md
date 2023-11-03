@@ -134,6 +134,8 @@ docker exec -it sqlserver /bin/bash
 ```
 
 The good news is that VSCode extension can streamline above all of steps!
+
+#### Setup the development environment using dev container in VSCode
 * Step 1 : Install VSCode Extension `Dev Containers`
 * Step 2 : Cmd + Shift + P and type `>Dev Containers: Add Dev Container Configuration Files`
 * Step 3 : Select `From a predefined container configuration definition`
@@ -198,7 +200,8 @@ services:
 ```
  * Step 10 : Update `postCreateCommand.sh` under `mssql` folder: replace all `localhost` to `sql_server`
 
-#### Setup the development environment using dev container in VSCode
+## Start Setup Database
+
 
 ## Reference
 https://github.com/PacktPublishing/Building-Modern-SaaS-Applications-with-C-and-.NET
