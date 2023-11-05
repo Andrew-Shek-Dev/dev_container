@@ -209,8 +209,106 @@ services:
 ### Hello World Program
 TBC
 
-### Start Setup Database
+### Database Migration
+Step 1: Create .NET library
+```bash
+dotnet new classlib --name RoomBookingSystem.Database
+```
 
+Step 2: Add all essential NuGet Packages of new .NET library
+* Open your project workspace in VSCode
+* Open the Command Palette (Ctrl+Shift+P)
+* Select > NuGet Package Manager GUI
+* Click Install New Package
+* Search and add following package:
+  - Microsoft.EntityFrameworkCore
+  - Microsoft.EntityFrameworkCore.Design
+  - Microsoft.EntityFrameworkCore.Analyzers
+  - Microsoft.EntityFrameworkCore.Relational
+  - Microsoft.EntityFrameworkCore.SqlServer
+  - Microsoft.EntityFrameworkCore.Tools
+
+Step 3: Create Database Migration File
+  - Create `RoomBookingSystemDbContext.cs` and `SeedData.cs`
+  - Remove `Class1.cs`
+
+Step 4: Create Entity File (ORM File)
+  - Create `Entities` folder
+  - Create `Room.cs`
+
+Step 5: Design `Room.cs`
+```C#
+namespace RoomBookingSystem.Database.Entities;
+
+public class Room{
+    public int Id {get;set;}
+    //default = use default value
+    //! =  The unary postfix ! operator is the null-forgiving, or null-suppression, operator. In an enabled nullable annotation context, you use the null-forgiving operator to suppress all nullable warnings for the preceding expression. 
+    public String Name {get;set;} = default!;
+    public String Description {get;set;} = default!;
+}
+```
+
+Step 6: Design `SeedData.cs`
+```c#
+namespace RoomBookingSystem.Database.Entities; //Java = package..
+
+using Microsoft.EntityFrameworkCore; //Java = import..
+
+public static class SeedData{
+    public static void Seed(ModelBuilder modelBuilder){
+        
+    }
+}
+```
+
+```c#
+namespace RoomBookingSystem.Database.Entities; //Java = package..
+
+using Microsoft.EntityFrameworkCore; //Java = import..
+
+public static class SeedData{
+  //Similar to knex seed file
+    public static void Seed(ModelBuilder modelBuilder){
+        modelBuilder.Entity<Room>().HasData(
+            new Room {Id=1,Name="Room#1",Description="1/F"},
+            new Room {Id=2,Name="Room#2",Description="2/F"},
+            new Room {Id=3,Name="Room#3",Description="3/F"}
+        );
+    }
+}
+```
+
+Step 7: Design the migration file
+```C#
+namespace RoomBookingSystem.Database;
+
+using Microsoft.EntityFrameworkCore;
+using RoomBookingSystem.Database.Entities;
+
+public class RoomBookingSystemDbContext : DbContext{
+    public DbSet<Room>? Rooms {get;set;}
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)=>
+        optionsBuilder.UseSqlServer("Server=sql_server;Database=CAD001_Demo;User Id=sa;Password=P@ssw0rd;Integrated Security=false;TrustServerCertificate=true;");
+    protected override void OnModelCreating(ModelBuilder modelBuilder)=> SeedData.Seed(modelBuilder);
+}
+```
+
+Step 8: Database Migration
+Please following commands:
+```bash
+dotnet-ef migrations add InitialSetup
+dotnet-ef database update
+```
+
+if something wrong in migration file, run following commands for rollback:
+```bash
+dotnet-ef database drop
+dotnet-ef migrations remove
+```
+Next, run the migration commands again.
+
+Step 9: Open the database using VSCode Extension, SQL Server (mssql).
 
 ## Reference
 https://github.com/PacktPublishing/Building-Modern-SaaS-Applications-with-C-and-.NET

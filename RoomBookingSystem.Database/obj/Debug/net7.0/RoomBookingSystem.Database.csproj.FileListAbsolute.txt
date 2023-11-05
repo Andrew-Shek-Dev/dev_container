@@ -1,0 +1,14 @@
+/workspaces/dev_container/RoomBookingSystem.Database/bin/Debug/net7.0/RoomBookingSystem.Database.deps.json
+/workspaces/dev_container/RoomBookingSystem.Database/bin/Debug/net7.0/RoomBookingSystem.Database.runtimeconfig.json
+/workspaces/dev_container/RoomBookingSystem.Database/bin/Debug/net7.0/RoomBookingSystem.Database.dll
+/workspaces/dev_container/RoomBookingSystem.Database/bin/Debug/net7.0/RoomBookingSystem.Database.pdb
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.csproj.AssemblyReference.cache
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.AssemblyInfoInputs.cache
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.AssemblyInfo.cs
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.csproj.CoreCompileInputs.cache
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.dll
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/refint/RoomBookingSystem.Database.dll
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.pdb
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/RoomBookingSystem.Database.genruntimeconfig.cache
+/workspaces/dev_container/RoomBookingSystem.Database/obj/Debug/net7.0/ref/RoomBookingSystem.Database.dll

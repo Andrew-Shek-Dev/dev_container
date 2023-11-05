@@ -22,7 +22,8 @@
 				 "syncfusioninc.blazor-vscode-extensions",
 				 "ms-dotnettools.vscode-dotnet-runtime",
 				 "ms-dotnettools.blazorwasm-companion",
-				 "streetsidesoftware.code-spell-checker"
+				 "streetsidesoftware.code-spell-checker",
+				 "ms-dotnettools.csdevkit"
 			]
 		}
 	},
