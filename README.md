@@ -3,7 +3,7 @@
 ### DEV Container
 <Content>
 
-#### Setup the development environment using dev container manually
+#### Setup the development environment using dev container manually (Reference ONLY)
 * Step 1 : Create following project folder structure
 ```
 project folder
@@ -159,7 +159,7 @@ The good news is that VSCode extension can streamline above all of steps!
 				"ms-mssql.mssql",
 				 //Add Other packages
          //<- update below
-				  "shardulm94.trailing-spaces",
+				 "shardulm94.trailing-spaces",
 				 "mikestead.dotenv",
 				 "fernandoescolar.vscode-solution-explorer",
 				 "aliasadidev.nugetpackagemanagergui",

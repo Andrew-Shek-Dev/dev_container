@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  api_server:
+    build: 
+      context: ./api_server
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspaces
+    command: sleep infinity
+    network_mode: service:db
+
+  db:
+    image: andrewtecky/oracle19c_m2
+    restart: unless-stopped
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    volumes:
+      - ./onlineShopB2B_Platform:/opt/oracle/oradata
+    environment:
+      ORACLE_PDB: cad003
+      ORACLE_PWD: P@ssw0rd
+      INIT_SGA_SIZE: 3000
+      INIT_PGA_SIZE: 1000

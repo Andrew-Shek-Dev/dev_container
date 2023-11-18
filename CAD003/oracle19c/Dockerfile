@@ -1,0 +1,3 @@
+FROM oracle/database:19.3.0-ee
+EXPOSE 1521
+EXPOSE 5500
