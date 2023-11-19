@@ -20,6 +20,6 @@ services:
       - ./onlineShopB2B_Platform:/opt/oracle/oradata
     environment:
       ORACLE_PDB: cad003
-      ORACLE_PWD: P@ssw0rd
+      ORACLE_PWD: password
       INIT_SGA_SIZE: 3000
       INIT_PGA_SIZE: 1000

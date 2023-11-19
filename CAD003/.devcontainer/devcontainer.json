@@ -3,7 +3,7 @@
 {
 	"name": "CAD003 Demo",
 	"dockerComposeFile": "../docker-compose.yml",
-	"service": "dev-env",
+	"service": "api_server",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.

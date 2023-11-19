@@ -33,11 +33,6 @@ ENV PATH $PATH:/root/.dotnet/tools
 
 # configure for https
 RUN dotnet dev-certs https
-
-# Install SQL Tools: SQLPackage and sqlcmd
-COPY ./mssql/installSQLtools.sh installSQLtools.sh
-RUN bash ./installSQLtools.sh \
-     && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts
 ```
 
 * Step 3 : Create Docker Compose File
