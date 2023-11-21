@@ -305,5 +305,349 @@ Next, run the migration commands again.
 
 Step 9: Open the database using VSCode Extension, SQL Server (mssql).
 
+
+
+
+
+## Lesson 3 - Database Setup
+### TBC
+### Oracle Database Operations
+#### Step 1 : Create User
+```bash
+sqlplus /nolog
+```
+
+```sql
+connect sys/password@cad003 as sysdba
+create user scott identified by scott DEFAULT TABLESPACE USERS;
+grant connect,resource,create view to scott;
+GRANT UNLIMITED TABLESPACE TO scott;
+```
+
+### Step 2 : Create Tables
+```sql
+create table scott.dept(deptno number(2) visible not null, dname varchar2(14 byte) visible, loc varchar2(13 byte) visible);
+insert into dept values ('50','TEST','WASHINGTON');
+alter table dept add constraint "pk_dept" primary key ("DEPTNO");
+
+create table emp(empno number(4) visible not null, ename varchar2(10 byte) visible, job varchar2(9 byte) visible, mgr number(4) visible, hiredate date visible, sql number(7,2) visible, comm number(7,2) visible, deptno number(2) visible);
+insert into emp values('7935','SSSS','SALESMAN','7792',TO_DATE('2022-01-18 17:06:37','SYYYY-MM-DD HH24:MI:SS'),'4100',NULL,NULL);
+alter table emp add constraint "pk_emp" primary key ("EMPNO");
+alter table emp add constraint "fk_deptno" foreign key ("DEPTNO") references dept("DEPTNO") NOT deferrable initially immediate norely validate;
+
+create table bonus(ename varchar2(10 byte) visible, job varchar2(9 byte) visible, sal number visible, comm number visible);
+create table salgrade(grade number visible,losal number visible, hisal number visible);
+insert into salgrade values('1','700','1200');
+```
+
+### Step 3 : Data Types
+- +, -, *, /
+- NUMBER(+-*/),VARCHAR2,DATE(+-)
+### Step 4 : Basic Operations
+```sql
+SQL> select sysdate from dual;
+
+SYSDATE
+---------
+21-NOV-23
+```
+
+```sql
+SQL> select sysdate + 1 from dual;    
+
+SYSDATE+1
+---------
+22-NOV-23
+```
+
+```sql
+SQL> select (sysdate-hiredate)/365 from emp;    
+
+(SYSDATE-HIREDATE)/365
+----------------------
+            1.84010635
+```
+
+```sql
+SQL> select trunc(months_between(sysdate,hiredate)/12) from emp; 
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,HIREDATE)/12)
+------------------------------------------
+                                         1
+```
+
+```sql
+SQL> select trunc(months_between(sysdate,hiredate)/12) as period from emp; 
+
+    PERIOD
+----------
+         1
+
+SQL> select trunc(months_between(sysdate,hiredate)/12) period from emp;
+
+    PERIOD
+----------
+         1
+
+SQL> select e.empno,e.ename from emp e;      
+
+     EMPNO ENAME
+---------- ----------
+      7935 SSSS
+
+
+SQL> select e.ename || ' (Staff# is '||e.empno||')' staff from emp e;  
+
+STAFF
+---------------------------------------------------------------
+SSSS (Staff# is 7935)
+
+```
+
+Offset and Limit
+```sql
+SELECT * FROM emp OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY;
+```
+
+Basic SQL Syntax
+```sql
+SQL> select * from emp where comm is null;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+SQL> select * from emp where comm is not null;        
+
+no rows selected
+
+SQL> select * from emp where upper(ename) = upper('ssss');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+
+SQL> select * from emp where extract(year from hiredate) = '1981';
+
+no rows selected
+
+SQL> select * from emp where extract(year from hiredate) = '2022';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+SQL> select * from emp where job like('_A%');      
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+
+
+SQL> select * from emp where job like('%_E%'); 
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+SQL> select * from emp where job like('_A%');      
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+
+
+SQL> select * from emp where job like('%_E%'); 
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+SQL> select * from emp where job like('_A%');      
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+
+
+SQL> select * from emp where job like('%_E%'); 
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SQL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7935 SSSS       SALESMAN        7792 18-JAN-22       4100
+
+```
+_  any ONE character
+
+```sql
+SQL> select * from emp where job like '%\%%' escape '\';
+
+no rows selected
+```
+
+AND,OR, NOT are similar to other sql server.
+
+SubQuery
+
+Transraction
+```sql
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        50 TEST           WASHINGTON
+
+SQL> delete from dept where deptno=60; 
+
+0 rows deleted.
+
+SQL> delete from dept where deptno=50;
+
+1 row deleted.
+
+SQL> select * from dept;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        50 TEST           WASHINGTON
+
+```
+
+```sql
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        50 TEST           WASHINGTON
+
+SQL> delete from dept where deptno=50;
+
+1 row deleted.
+
+SQL> select * from dept;
+
+no rows selected
+
+SQL> insert into dept(deptno,dname,loc) values(63,'BOSS','DONGGUAN');
+
+1 row created.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        63 BOSS           DONGGUAN
+
+SQL> commit; 
+
+Commit complete.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        63 BOSS           DONGGUAN
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        63 BOSS           DONGGUAN
+```
+
+```sql
+SQL> delete from dept where deptno = 50; 
+
+1 row deleted.
+
+SQL> savepoint A;
+
+Savepoint created.
+
+SQL> update dept set loc='BEIJIN' where deptno=60;
+
+0 rows updated.
+
+SQL> insert into dept(deptno,dname,loc) values(63,'BOSS','DONGGUAN');
+
+1 row created.
+
+SQL> savepoint B; 
+
+Savepoint created.
+
+SQL> delete from dept where deptno = 63;
+
+1 row deleted.
+
+SQL> select * from dept;
+
+no rows selected
+
+SQL> rollback to savepoint B;
+
+Rollback complete.
+
+SQL> select * from dept; 
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        63 BOSS           DONGGUAN
+
+SQL> rollback to savepoint A;
+
+Rollback complete.
+
+SQL> select * from dept;
+
+no rows selected
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        50 TEST           WASHINGTON
+
+```
+
 ## Reference
-https://github.com/PacktPublishing/Building-Modern-SaaS-Applications-with-C-and-.NET
+* https://github.com/PacktPublishing/Building-Modern-SaaS-Applications-with-C-and-.NET
+* https://blog.csdn.net/langfeiyes/article/details/123597992
