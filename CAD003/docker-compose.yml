@@ -18,8 +18,10 @@ services:
       - "5500:5500"
     volumes:
       - ./onlineShopB2B_Platform:/opt/oracle/oradata
+     #Oracle Database will be run under multitenant architecture, so plaese MUST follow below environment variables
     environment:
+      ORACLE_SID: OADMIN #MUST be capital Letter
       ORACLE_PDB: cad003
-      ORACLE_PWD: password
+      ORACLE_PWD: In4IimWl #MUST strong password, otherwise, user cannot login!
       INIT_SGA_SIZE: 3000
       INIT_PGA_SIZE: 1000
